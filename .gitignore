@@ -5,3 +5,7 @@
 /lib/Native
 packages
 paket-files
+/bin/Debug
+/CefGlue.WPF/bin/Release
+/CefGlue.WindowsForms/bin/Release
+/bin/ReleaseXilium.CefGlue.xml
