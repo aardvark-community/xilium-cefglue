@@ -1,0 +1,7 @@
+**/obj/Release/**
+**/obj/Debug/**
+/bin/Release
+/.fake
+/lib/Native
+packages
+paket-files

@@ -1,0 +1,10 @@
+source https://api.nuget.org/v3/index.json
+
+group Build
+content: none
+source https://vrvis.myget.org/F/aardvark_public/api/v3/index.json
+source https://api.nuget.org/v3/index.json
+
+nuget SharpZipLib ~> 0.86.0
+
+github vrvis/Aardvark.Fake:standalone
