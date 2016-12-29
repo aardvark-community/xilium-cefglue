@@ -9,3 +9,6 @@ paket-files
 /CefGlue.WPF/bin/Release
 /CefGlue.WindowsForms/bin/Release
 /bin/ReleaseXilium.CefGlue.xml
+/CefGlue.WindowsForms/bin/Debug
+/CefGlue/bin/Debug
+/bin

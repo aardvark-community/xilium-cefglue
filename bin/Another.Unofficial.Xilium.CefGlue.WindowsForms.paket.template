@@ -1,0 +1,8 @@
+type file
+id Another.Unofficial.Xilium.CefGlue.WindowsForms
+authors Xilium CefGlue Team, Paket packaging Harald Steinlechner
+description 
+    An unofficial fork of official http://xilium.bitbucket.org/cefglue/ extended with
+	easy nuget package creation and native dependencies injection.
+files
+	Release\Xilium.CefGlue.WindowsForms.dll ==> lib\net40
