@@ -404,6 +404,7 @@
     <Compile Include="Interop\Structs\cef_point_t.cs" />
     <Compile Include="Interop\Structs\cef_size_t.cs" />
     <Compile Include="Interop\Structs\cef_screen_info_t.cs" />
+    <Compile Include="NativeDependencies.cs" />
     <Compile Include="Platform\Linux\CefWindowInfoLinuxImpl.cs" />
     <Compile Include="Platform\Mac\CefWindowInfoMacImpl.cs" />
     <Compile Include="Platform\Windows\CefWindowInfoWindowsImpl.cs" />

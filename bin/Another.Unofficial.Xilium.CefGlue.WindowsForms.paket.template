@@ -6,3 +6,5 @@ description
 	easy nuget package creation and native dependencies injection.
 files
 	Release\Xilium.CefGlue.WindowsForms.dll ==> lib\net40
+dependencies
+    Another.Unofficial.Xilium.CefGlue = CURRENTVERSION
