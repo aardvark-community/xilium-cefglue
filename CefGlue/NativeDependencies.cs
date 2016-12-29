@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Xilium.CefGlue
 {
-    static class NativeDependencies
+    public static class NativeDependencies
     {
         static IEnumerable<KeyValuePair<Tuple<string, int>, string>> NativeDependencyPaths =
                 new List<KeyValuePair<Tuple<string, int>, string>>()
