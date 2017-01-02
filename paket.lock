@@ -1,9 +1,11 @@
-
+NUGET
+  remote: http://api.nuget.org/v3/index.json
+    SharpZipLib (0.86)
 
 GROUP Build
 CONTENT: NONE
 NUGET
-  remote: https://api.nuget.org/v3/index.json
+  remote: http://api.nuget.org/v3/index.json
     Chessie (0.5.1) - content: none
       FSharp.Core
     FAKE (4.47.1) - content: none
@@ -56,7 +58,6 @@ NUGET
       FSharp.Core
       Mono.Cecil
       Newtonsoft.Json
-    SharpZipLib (0.86)
     SourceLink.Fake (1.1) - content: none
     System.Collections (4.3) - content: none, framework: >= netstandard10
       Microsoft.NETCore.Platforms (>= 1.1) - framework: dnxcore50, netstandard10, >= netstandard13
@@ -254,7 +255,7 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3) - framework: dnxcore50, netstandard10, >= netstandard13
 GITHUB
   remote: vrvis/Aardvark.Fake
-    FULLPROJECT (a580a53395598fe16e26cada0781a172ee596680)
+    FULLPROJECT (553c5b51079bc60da4502648698d8797056abf36)
       Chessie (>= 0.5 < 0.6)
       FAKE (< 5.0)
       Mono.Cecil (<= 0.9.5.4)

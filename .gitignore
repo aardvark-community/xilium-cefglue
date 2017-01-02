@@ -13,3 +13,5 @@ paket-files
 /CefGlue/bin/Debug
 /bin
 /.vs/Xilium.CefGlue/v14
+**/bin/Release/**
+**/bin/Debug/**
