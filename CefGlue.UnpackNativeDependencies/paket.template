@@ -2,6 +2,6 @@ type project
 id Another.Unofficial.Xilium.CefGlue.UnpackNativeDependencies
 authors Harald Steinlechner
 description
-    Downloads appropriate CEF binaries and unpacks them beside the application or another working directory.
+    Downloads appropriate CEF binaries and unpacks them beside the application or another working directory
 files
-	bin\Release\CefGlue.UnpackNativeDependencies.dll ==> lib\net40
+    ..\bin\Release\CefGlue.UnpackNativeDependencies.dll ==> lib\net45

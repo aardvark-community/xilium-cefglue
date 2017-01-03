@@ -34,7 +34,7 @@ let cefBuild =
 
 do Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 
-DefaultSetup.install ["Xilium.CefGlue.sln"]
+DefaultSetup.install ["Xilium.CefGlue.WithoutGtk.sln"]
 
 let unbz2 (sourceFile : string)  = 
     let targetFile = Path.ChangeExtension(Path.GetFileNameWithoutExtension sourceFile,"tar")

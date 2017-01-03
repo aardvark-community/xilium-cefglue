@@ -15,3 +15,9 @@ paket-files
 /.vs/Xilium.CefGlue/v14
 **/bin/Release/**
 **/bin/Debug/**
+**/obj/**
+/CefGlue.Demo.WinForms/bin/x86/Debug
+/CefGlue.Samples.WpfOsr/bin/x86/Debug
+/CefGlue.Tests/bin/x86/Debug
+/CefGlue.WPF.Tests/bin/x86/Debug
+/.vs/Xilium.CefGlue.WithoutGtk/v14/*.suo
