@@ -9,6 +9,7 @@
         [STAThread]
         private static int Main(string[] args)
         {
+            Xilium.CefGlue.ChromiumUtilities.UnpackCef();
             using (var application = new DemoAppImpl())
             {
                 return application.Run(args);

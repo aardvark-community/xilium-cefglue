@@ -59,24 +59,44 @@ module ChromiumUtilities =
         let tempDir = Path.GetTempPath()
 
         let downloadFile = Path.Combine [| tempDir; tarbz |]
-        if File.Exists downloadFile then ()
-        else
-            use wc = new WebClient()
-            printfn "[install] downloading: %s to %s" url downloadFile
-            wc.DownloadFile(url,downloadFile)
-        
-        let targetDir = Path.Combine [| tempDir; plainDirName |]
-        let tarFile = unbz2 downloadFile
-        untar tarFile tempDir
-        let release   = Path.Combine [| targetDir;  "Release" |]
-        let resources = Path.Combine [| targetDir;  "Resources" |]
-        printfn "[install] copy %s to %s" release unpackDir
-        copyDir release unpackDir
-        copyDir resources unpackDir
 
-        //File.Delete(downloadFile)
-        Directory.Delete(targetDir,true)
-        printfn "[install] downloadCefTo %s to %s done." url downloadFile
+        let download () =
+            use wc = new WebClient()
+            printfn "[install] downloading: %s to %s\n" url downloadFile
+            let uri = Uri(url)
+            wc.DownloadProgressChanged.Add(fun a -> 
+                Console.Write("\r{0}%", a.ProgressPercentage);
+            )
+            wc.DownloadFileTaskAsync(uri,downloadFile).Wait()
+            printfn "[install] downloaded file"
+
+        if File.Exists downloadFile then ()
+        else download()
+        
+        let maxTrials = 2
+        let rec doIt (remainingTrials : int) =
+            if remainingTrials <= 0 then failwith "[install] out of trials for download. go to https://www.spotify.com/at/opensource/, download the correct version and report failure of CefGlue.UnpackNativeDependencies."
+            else
+                try
+                    printfn "[install] trying to install cef, trial: %d" (maxTrials - remainingTrials)
+                    let targetDir = Path.Combine [| tempDir; plainDirName |]
+                    let tarFile = unbz2 downloadFile
+                    untar tarFile tempDir
+                    let release   = Path.Combine [| targetDir;  "Release" |]
+                    let resources = Path.Combine [| targetDir;  "Resources" |]
+                    printfn "[install] copy %s to %s" release unpackDir
+                    copyDir release unpackDir
+                    copyDir resources unpackDir
+
+                    //File.Delete(downloadFile)
+                    Directory.Delete(targetDir,true)
+                    printfn "[install] downloadCefTo %s to %s done." url downloadFile
+                with e -> 
+                    printfn "[install] installed failed with: %A in %A" e.Message e.StackTrace
+                    printfn "[install] retrying with fresh download..."
+                    download()
+                    doIt (remainingTrials - 1)
+        doIt 2
 
     let unpackDependencies (id,version) (deps : seq<KeyValuePair<string*int,string>>) (workingDir : string) =
         let install () =

@@ -21,3 +21,6 @@ paket-files
 /CefGlue.Tests/bin/x86/Debug
 /CefGlue.WPF.Tests/bin/x86/Debug
 /.vs/Xilium.CefGlue.WithoutGtk/v14/*.suo
+/CefGlue.Demo.GtkSharp/bin/x86/Debug
+/.vs/Xilium.CefGlue.WithoutGtk/v15/*.suo
+/.vs/Xilium.CefGlue/v15/*.suo

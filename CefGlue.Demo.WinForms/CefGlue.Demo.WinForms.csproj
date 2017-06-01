@@ -36,7 +36,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F9025CE1-2DF4-409B-8961-A51DFAEAABDD}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xilium.CefGlue.Demo</RootNamespace>
     <AssemblyName>Xilium.CefGlue.Demo.WinForms</AssemblyName>
@@ -124,6 +124,10 @@
     <ProjectReference Include="..\CefGlue.Demo\CefGlue.Demo.csproj">
       <Project>{b928a030-e818-4634-9c6b-f9224e996bd6}</Project>
       <Name>CefGlue.Demo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CefGlue.UnpackNativeDependencies\CefGlue.UnpackNativeDependencies.fsproj">
+      <Project>{85547fde-0927-42e0-8cbf-95280f0b8a7c}</Project>
+      <Name>CefGlue.UnpackNativeDependencies</Name>
     </ProjectReference>
     <ProjectReference Include="..\CefGlue\CefGlue.csproj">
       <Project>{703ff300-34b9-48d4-a5d6-e741f48d5f95}</Project>
