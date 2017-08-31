@@ -99,6 +99,14 @@ module ChromiumUtilities =
         doIt 2
 
     let unpackDependencies (id,version) (deps : seq<KeyValuePair<string*int,string>>) (workingDir : string) =
+
+        // need more version cache files for 
+        let id =
+            match System.Environment.OSVersion.Platform with
+                | System.PlatformID.Unix -> sprintf "%s_unix" id
+                | System.PlatformID.MacOSX -> sprintf "%s_mac" id
+                | _ -> id 
+
         let install () =
             let currentArch = getCurrentArch ()
             match deps |> Seq.tryFind (fun (KeyValue(arch, url)) -> arch = currentArch) with
@@ -110,6 +118,7 @@ module ChromiumUtilities =
                     failwithf "no native dependency for current platform: %A, candidates are: %A" currentArch (deps |> Seq.toList |> List.map (fun (KeyValue(k,v)) -> k,v))
         
         let c = Console.ForegroundColor
+
         if File.Exists id then
             let installedVersion = File.ReadAllText id
             if installedVersion = version then 
