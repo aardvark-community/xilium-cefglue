@@ -7,6 +7,7 @@
     using System.Drawing.Drawing2D;
     using System.Windows.Forms;
 
+
     [ToolboxBitmap(typeof(CefWebBrowser))]
     public class CefWebBrowser : Control
     {
@@ -106,16 +107,19 @@
             base.Dispose(disposing);
         }
 
-    	public event EventHandler BrowserCreated;
+    	public event EventHandler<CefBrowserCreatedEventArgs> BrowserCreated;
 
         internal protected virtual void OnBrowserAfterCreated(CefBrowser browser)
         {
-            _browser = browser;
-            _browserWindowHandle = _browser.GetHost().GetWindowHandle();
-            ResizeWindow(_browserWindowHandle, Width, Height);
+            if (!browser.IsPopup)
+            {
+                _browser = browser;
+                _browserWindowHandle = browser.GetHost().GetWindowHandle();
+                ResizeWindow(_browserWindowHandle, Width, Height);
+            }
 
 			if (BrowserCreated != null)
-				BrowserCreated(this, EventArgs.Empty);
+				BrowserCreated(this, new CefBrowserCreatedEventArgs(browser));
         }
 
 		internal protected virtual void OnTitleChanged(TitleChangedEventArgs e)

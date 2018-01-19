@@ -43,7 +43,7 @@
             CefBrowserHost.CreateBrowser(windowInfo, _client, _settings, StartUrl);
         }
 
-        public event EventHandler Created;
+        public event EventHandler<CefBrowserCreatedEventArgs> Created;
 
         internal void OnCreated(CefBrowser browser)
         {
@@ -54,7 +54,7 @@
             var handler = Created;
             if (handler != null)
             {
-                handler(this, EventArgs.Empty);
+                handler(this, new CefBrowserCreatedEventArgs(browser));
             }
         }
 

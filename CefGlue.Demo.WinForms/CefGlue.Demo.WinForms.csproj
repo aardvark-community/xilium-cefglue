@@ -129,6 +129,10 @@
       <Project>{85547fde-0927-42e0-8cbf-95280f0b8a7c}</Project>
       <Name>CefGlue.UnpackNativeDependencies</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CefGlue.WindowsForms\CefGlue.WindowsForms.csproj">
+      <Project>{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4}</Project>
+      <Name>CefGlue.WindowsForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CefGlue\CefGlue.csproj">
       <Project>{703ff300-34b9-48d4-a5d6-e741f48d5f95}</Project>
       <Name>CefGlue</Name>

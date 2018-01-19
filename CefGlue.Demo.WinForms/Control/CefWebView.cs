@@ -17,7 +17,7 @@
         public CefWebView(string url, bool transparent = false)
         {
             _core = new WebBrowser(this, new CefBrowserSettings(), url ?? "about:blank");
-            _core.Created += new EventHandler(BrowserCreated);
+            _core.Created += new EventHandler<CefBrowserCreatedEventArgs>(BrowserCreated);
 
             var windowInfo = CefWindowInfo.Create();
             windowInfo.SetAsPopup(IntPtr.Zero, null);

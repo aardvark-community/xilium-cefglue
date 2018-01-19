@@ -1,5 +1,6 @@
 ﻿namespace Xilium.CefGlue.Demo
 {
+    using WindowsForms;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -47,7 +48,7 @@
             // settings.AcceleratedCompositing = CefState.Disabled;
 
             _core = new WebBrowser(this, settings, "about:blank");
-            _core.Created += new EventHandler(BrowserCreated);
+            _core.Created += new EventHandler<CefBrowserCreatedEventArgs>(BrowserCreated);
         }
 
         public string StartUrl
@@ -90,11 +91,13 @@
             base.Dispose(disposing);
         }
 
-        internal void BrowserCreated(object sender, EventArgs e)
+        internal void BrowserCreated(object sender, CefBrowserCreatedEventArgs e)
         {
-            // _browser = browser;
-            _browserWindowHandle = _core.CefBrowser.GetHost().GetWindowHandle();
-            ResizeWindow(_browserWindowHandle, Width, Height);
+            if (!e.Browser.IsPopup)
+            {
+                _browserWindowHandle = e.Browser.GetHost().GetWindowHandle();
+                ResizeWindow(_browserWindowHandle, Width, Height);
+            }
         }
 
         /*
