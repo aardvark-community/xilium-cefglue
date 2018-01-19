@@ -13,10 +13,12 @@
 
         private static bool _loaded;
         private static bool _initialized;
+        private static string _loadPath;
 
         static CefRuntime()
         {
             _platform = DetectPlatform();
+            _loadPath = null;
         }
 
         #region Platform Detection
@@ -68,6 +70,12 @@
         }
         #endregion
 
+        public static string LoadPath
+        {
+            get { return _loadPath; }
+            set { _loadPath = value; }
+        }
+
         /// <summary>
         /// Loads CEF runtime.
         /// </summary>
@@ -76,7 +84,7 @@
         /// <exception cref="InvalidOperationException"></exception>
         public static void Load()
         {
-            Load(null);
+            Load(_loadPath);
         }
 
         /// <summary>
