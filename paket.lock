@@ -13,7 +13,7 @@ NUGET
   remote: http://api.nuget.org/v3/index.json
     SourceLink.Fake (1.1) - content: none
 GITHUB
-  remote: vrvis/Aardvark.Fake
+  remote: aardvark-platform/aardvark.fake
     FULLPROJECT (02934ce0408f1b142d08173c958a5501c36a8ff2)
       FAKE (>= 4.63 < 4.64)
       Mono.Cecil (>= 0.10.0-beta6 < 0.11)

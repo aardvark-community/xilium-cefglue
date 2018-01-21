@@ -1,18 +1,22 @@
-@echo off & setlocal enableextensions enabledelayedexpansion
+@echo off
+SETLOCAL
+PUSHD %~dp0
 
-call "%~dp0\build\setenv"
-if "%errorlevel%" neq "0" goto errSetEnv
 
-:: build
-MSBuild %* "build.proj"
-if "%errorlevel%" neq "0" goto errBuild
-goto :eof
+.paket\paket.bootstrapper.exe
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
 
-:: errors
-:errBuild
-echo.Error: build error.
-exit /b 1
+.paket\paket.exe restore group Build
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
 
-:errSetEnv
-echo.Error: setenv error.
-exit /b 1
+cls
+
+SET FSI_PATH=packages\build\FAKE\tools\Fake.exe
+"%FSI_PATH%" "build.fsx" Dummy --fsiargs build.fsx --shadowcopyreferences+ %* 
+
+
+
