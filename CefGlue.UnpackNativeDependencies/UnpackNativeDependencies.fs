@@ -16,7 +16,7 @@ open ICSharpCode.SharpZipLib.Tar;
 open ICSharpCode.SharpZipLib.BZip2
 
 module ChromiumUtilities =
-
+    let private sha1 = System.Security.Cryptography.SHA1.Create()
     let getCurrentArch () =
         let arch = if IntPtr.Size = 8 then 64 else 32
         let plat = 
@@ -29,19 +29,27 @@ module ChromiumUtilities =
     let unbz2 (tarbz2 : string)  = 
         let tar = Path.Combine [| Path.GetDirectoryName tarbz2; Path.GetFileNameWithoutExtension tarbz2 |]
         printf " 0:   unbz2"
-        use fs = new FileStream(tarbz2, FileMode.Open, FileAccess.Read)
-        use fsOut = File.Create(tar)
-        BZip2.Decompress(fs,fsOut,true)
-        printfn " done"
-        tar
+        try
+            use fs = new FileStream(tarbz2, FileMode.Open, FileAccess.Read)
+            use fsOut = File.Create(tar)
+            BZip2.Decompress(fs,fsOut,true)
+            printfn " done"
+            tar
+        with _ ->
+            printfn " failed"
+            failwithf "CEF unbz2 of %s failed" tarbz2
 
     let untar (sourceFile : string) (destFolder : string) = 
         printf " 0:   untar"
-        use s = File.OpenRead(sourceFile)
-        use tar = TarArchive.CreateInputTarArchive(s)
-        tar.ExtractContents(destFolder)
-        printfn " done"
-        tar.Close()
+        try
+            use s = File.OpenRead(sourceFile)
+            use tar = TarArchive.CreateInputTarArchive(s)
+            tar.ExtractContents(destFolder)
+            printfn " done"
+            tar.Close()
+        with _ ->
+            printfn " failed"
+            failwithf "untar of %s failed" sourceFile
 
 
     let rec copyDirInfo (srcInfo : DirectoryInfo) (dstInfo : DirectoryInfo) =
@@ -62,7 +70,17 @@ module ChromiumUtilities =
         else
             if not dst.Exists then dst.Create()
             copyDirInfo src dst
+            
+    let downloadString (url : string) =
+        let request = HttpWebRequest.Create(url)
+        
+        use response = request.GetResponse()
+        use reader = new StreamReader(response.GetResponseStream())
+        reader.ReadToEnd()
 
+    let computeHash (file : string) =
+        use stream = File.OpenRead(file)
+        sha1.ComputeHash(stream) |> Array.map (sprintf "%02x") |> String.concat ""
 
 
     let downloadCefTo (url : string) (unpackDir : string) = 
@@ -73,6 +91,17 @@ module ChromiumUtilities =
 
         let downloadFile = Path.Combine [| tempDir; tarbz |]
 
+        let downloadValid() =
+            try
+                let eHash = downloadString(url + ".sha1").ToLower()
+                let rHash = computeHash downloadFile
+                if rHash <> eHash then
+                    Choice2Of2 (eHash, rHash)
+                else
+                    Choice1Of2 true
+            with _ ->
+                Choice1Of2 false
+
         let download () =
             use wc = new WebClient()
             Console.Write(" 0:   download: 0%")
@@ -81,62 +110,70 @@ module ChromiumUtilities =
                 Console.Write("\r 0:   download: {0}%", a.ProgressPercentage);
             )
             wc.DownloadFileTaskAsync(uri,downloadFile).Wait()
-            Console.WriteLine("\r 0:   downloaded          ");
+
+            match downloadValid() with
+                | Choice1Of2 true -> 
+                    Console.WriteLine("\r 0:   downloaded          ")
+                | Choice1Of2 false ->
+                    let c = Console.ForegroundColor
+                    Console.ForegroundColor <- ConsoleColor.DarkYellow
+                    Console.WriteLine("\r 0:   could not validate hash")
+                    Console.ForegroundColor <- c
+                | Choice2Of2(eHash, rHash) -> 
+                    Console.WriteLine("\r 0:   invalid hash: {0}", rHash)
+                    failwithf "CEF invalid hash: { expected: %s; real: %s }" eHash rHash
 
         let downloadExists = 
-            if File.Exists downloadFile then 
-                let info = FileInfo(downloadFile)
+            let info = FileInfo(downloadFile)
 
-                let wc = HttpWebRequest.Create url
-                let fileSize = wc.GetResponse().ContentLength
-
-                if info.Length <> fileSize then
-                    info.Delete()
-                    false
-                else
-                    true
+            if info.Exists then 
+                match downloadValid() with
+                    | Choice2Of2(eHash, rHash) ->
+                        info.Delete()
+                        false
+                    | _ ->
+                        true
             else
                 false
+
+
 
         if downloadExists then
             printfn " 0:   skipping download"
         else 
             download()
+
         
+        let targetDir = Path.Combine [| tempDir; plainDirName |]
+        let release   = Path.Combine [| targetDir;  "Release" |]
+        let resources = Path.Combine [| targetDir;  "Resources" |]
+
+
+        let tarFile = unbz2 downloadFile
+        untar tarFile tempDir
         
-        let maxTrials = 2
-        let rec doIt (remainingTrials : int) =
-            if remainingTrials <= 0 then 
-                failwith "CEF out of trials for download. go to https://www.spotify.com/at/opensource/, download the correct version and report failure of CefGlue.UnpackNativeDependencies."
-            else
-                try
-                    let trial = maxTrials - remainingTrials
-                    if trial > 0 then
-                        printfn " 0:   installing cef (trial: %d)" trial
-                    let targetDir = Path.Combine [| tempDir; plainDirName |]
-                    let tarFile = unbz2 downloadFile
-                    untar tarFile tempDir
-                    let release   = Path.Combine [| targetDir;  "Release" |]
-                    let resources = Path.Combine [| targetDir;  "Resources" |]
+        printfn " 0:   copy binaries"
+        try
+            if not (Directory.Exists unpackDir) then Directory.CreateDirectory unpackDir |> ignore
+        with _ ->
+            printfn " 0:   could not create directory"
+            failwithf "CEF could not create directory: %s" unpackDir
 
-                    if not (Directory.Exists unpackDir) then
-                        Directory.CreateDirectory unpackDir |> ignore
+        try
+            copyDir release unpackDir
+            copyDir resources unpackDir
+        with _ ->
+            printfn " 0:   could not copy resources"
+            Directory.Delete unpackDir
+            failwithf "CEF could not copy resources to: %s" unpackDir
+            
+        try
+            File.Delete tarFile
+            File.Delete downloadFile
+            Directory.Delete(targetDir,true)
+        with _ ->
+            ()
 
-                    printfn " 0:   copy binaries"
-                    copyDir release unpackDir
-                    copyDir resources unpackDir
-
-                    File.Delete tarFile
-                    File.Delete downloadFile
-                    Directory.Delete(targetDir,true)
-                with e -> 
-                    let c = Console.ForegroundColor
-                    Console.ForegroundColor <- ConsoleColor.Red
-                    printfn " 0:   install failed with %A in %A" e.Message e.StackTrace
-                    Console.ForegroundColor <- c
-                    download()
-                    doIt (remainingTrials - 1)
-        doIt 2
 
     let unpackDependencies (id,version) (deps : seq<KeyValuePair<string*int,string>>) =
         let name = sprintf "%s_%s" id version
