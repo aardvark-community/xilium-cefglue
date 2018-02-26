@@ -213,5 +213,5 @@ module ChromiumUtilities =
 
     [<CompiledName("UnpackCef")>]
     let unpackCef () =
-        unpackDependencies ("cef", "3.2883.1539") Xilium.CefGlue.NativeDependencies.NativeDependencyPaths
+        unpackDependencies ("cef", "3.3282.1741") Xilium.CefGlue.NativeDependencies.NativeDependencyPaths
 

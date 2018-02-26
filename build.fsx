@@ -1,4 +1,4 @@
-#load @"paket-files/build/vrvis/Aardvark.Fake/DefaultSetup.fsx"
+#load @"paket-files/build/aardvark-platform/Aardvark.Fake/DefaultSetup.fsx"
 #r "packages/SharpZipLib/lib/20/ICSharpCode.SharpZipLib.dll"
 
 open Fake
