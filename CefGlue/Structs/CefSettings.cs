@@ -39,11 +39,22 @@
 
         /// <summary>
         /// The path to a separate executable that will be launched for sub-processes.
-        /// By default the browser process executable is used. See the comments on
-        /// CefExecuteProcess() for details. Also configurable using the
-        /// "browser-subprocess-path" command-line switch.
+        /// If this value is empty on Windows or Linux then the main process executable
+        /// will be used. If this value is empty on macOS then a helper executable must
+        /// exist at "Contents/Frameworks/&lt;app&gt; Helper.app/Contents/MacOS/&lt;app&gt; Helper"
+        /// in the top-level app bundle. See the comments on CefExecuteProcess() for
+        /// details. Also configurable using the "browser-subprocess-path" command-line
+        /// switch.
         /// </summary>
         public string BrowserSubprocessPath { get; set; }
+
+        /// <summary>
+        /// The path to the CEF framework directory on macOS. If this value is empty
+        /// then the framework must exist at "Contents/Frameworks/Chromium Embedded
+        /// Framework.framework" in the top-level app bundle. Also configurable using
+        /// the "framework-dir-path" command-line switch.
+        /// </summary>
+        public string FrameworkDirPath { get; set; }
 
         /// <summary>
         /// Set to <c>true</c> to have the browser process message loop run in a separate
@@ -217,28 +228,6 @@
         public int UncaughtExceptionStackSize { get; set; }
 
         /// <summary>
-        /// By default CEF V8 references will be invalidated (the IsValid() method will
-        /// return false) after the owning context has been released. This reduces the
-        /// need for external record keeping and avoids crashes due to the use of V8
-        /// references after the associated context has been released.
-        ///
-        /// CEF currently offers two context safety implementations with different
-        /// performance characteristics. The default implementation (value of 0) uses a
-        /// map of hash values and should provide better performance in situations with
-        /// a small number contexts. The alternate implementation (value of 1) uses a
-        /// hidden value attached to each context and should provide better performance
-        /// in situations with a large number of contexts.
-        ///
-        /// If you need better performance in the creation of V8 references and you
-        /// plan to manually track context lifespan you can disable context safety by
-        /// specifying a value of -1.
-        ///
-        /// Also configurable using the "context-safety-implementation" command-line
-        /// switch.
-        /// </summary>
-        public CefContextSafetyImplementation ContextSafetyImplementation { get; set; }
-
-        /// <summary>
         /// Set to true (1) to ignore errors related to invalid SSL certificates.
         /// Enabling this setting can lead to potential security vulnerabilities like
         /// "man in the middle" attacks. Applications that load content from the
@@ -263,10 +252,14 @@
         public bool EnableNetSecurityExpiration { get; set; }
 
         /// <summary>
-        /// Opaque background color used for accelerated content. By default the
-        /// background color will be white. Only the RGB compontents of the specified
-        /// value will be used. The alpha component must greater than 0 to enable use
-        /// of the background color but will be otherwise ignored.
+        /// Background color used for the browser before a document is loaded and when
+        /// no document color is specified. The alpha component must be either fully
+        /// opaque (0xFF) or fully transparent (0x00). If the alpha component is fully
+        /// opaque then the RGB components will be used as the background color. If the
+        /// alpha component is fully transparent for a windowed browser then the
+        /// default value of opaque white be used. If the alpha component is fully
+        /// transparent for a windowless (off-screen) browser then transparent painting
+        /// will be enabled.
         /// </summary>
         public CefColor BackgroundColor { get; set; }
 
@@ -286,6 +279,7 @@
             ptr->single_process = SingleProcess ? 1 : 0;
             ptr->no_sandbox = NoSandbox ? 1 : 0;
             cef_string_t.Copy(BrowserSubprocessPath, &ptr->browser_subprocess_path);
+            cef_string_t.Copy(FrameworkDirPath, &ptr->framework_dir_path);
             ptr->multi_threaded_message_loop = MultiThreadedMessageLoop ? 1 : 0;
             ptr->windowless_rendering_enabled = WindowlessRenderingEnabled ? 1 : 0;
             ptr->external_message_pump = ExternalMessagePump ? 1 : 0;
@@ -305,7 +299,6 @@
             ptr->pack_loading_disabled = PackLoadingDisabled ? 1 : 0;
             ptr->remote_debugging_port = RemoteDebuggingPort;
             ptr->uncaught_exception_stack_size = UncaughtExceptionStackSize;
-            ptr->context_safety_implementation = (int)ContextSafetyImplementation;
             ptr->ignore_certificate_errors = IgnoreCertificateErrors ? 1 : 0;
             ptr->enable_net_security_expiration = EnableNetSecurityExpiration ? 1 : 0;
             ptr->background_color = BackgroundColor.ToArgb();
@@ -316,6 +309,7 @@
         private static void Clear(cef_settings_t* ptr)
         {
             libcef.string_clear(&ptr->browser_subprocess_path);
+            libcef.string_clear(&ptr->framework_dir_path);
             libcef.string_clear(&ptr->cache_path);
             libcef.string_clear(&ptr->user_data_path);
             libcef.string_clear(&ptr->user_agent);

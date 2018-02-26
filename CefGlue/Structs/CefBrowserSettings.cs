@@ -147,17 +147,6 @@
         }
 
         /// <summary>
-        /// Controls whether JavaScript can be used for opening windows. Also
-        /// configurable using the "disable-javascript-open-windows" command-line
-        /// switch.
-        /// </summary>
-        public CefState JavaScriptOpenWindows
-        {
-            get { return _self->javascript_open_windows; }
-            set { _self->javascript_open_windows = value; }
-        }
-
-        /// <summary>
         /// Controls whether JavaScript can be used to close windows that were not
         /// opened via JavaScript. JavaScript can still be used to close windows that
         /// were opened via JavaScript or that have no back/forward history. Also
@@ -190,16 +179,6 @@
         {
             get { return _self->javascript_dom_paste; }
             set { _self->javascript_dom_paste = value; }
-        }
-
-        /// <summary>
-        /// Controls whether the caret position will be drawn. Also configurable using
-        /// the "enable-caret-browsing" command-line switch.
-        /// </summary>
-        public CefState CaretBrowsing
-        {
-            get { return _self->caret_browsing; }
-            set { _self->caret_browsing = value; }
         }
 
         /// <summary>
@@ -328,11 +307,14 @@
         }
 
         /// <summary>
-        /// Opaque background color used for the browser before a document is loaded
-        /// and when no document color is specified. By default the background color
-        /// will be the same as CefSettings.background_color. Only the RGB compontents
-        /// of the specified value will be used. The alpha component must greater than
-        /// 0 to enable use of the background color but will be otherwise ignored.
+        /// Background color used for the browser before a document is loaded and when
+        /// no document color is specified. The alpha component must be either fully
+        /// opaque (0xFF) or fully transparent (0x00). If the alpha component is fully
+        /// opaque then the RGB components will be used as the background color. If the
+        /// alpha component is fully transparent for a windowed browser then the
+        /// CefSettings.background_color value will be used. If the alpha component is
+        /// fully transparent for a windowless (off-screen) browser then transparent
+        /// painting will be enabled.
         /// </summary>
         public CefColor BackgroundColor
         {

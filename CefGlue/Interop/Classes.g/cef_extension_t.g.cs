@@ -10,89 +10,89 @@ namespace Xilium.CefGlue.Interop
     
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_domevent_t
+    internal unsafe struct cef_extension_t
     {
-        internal cef_base_t _base;
-        internal IntPtr _get_type;
-        internal IntPtr _get_category;
-        internal IntPtr _get_phase;
-        internal IntPtr _can_bubble;
-        internal IntPtr _can_cancel;
-        internal IntPtr _get_document;
-        internal IntPtr _get_target;
-        internal IntPtr _get_current_target;
+        internal cef_base_ref_counted_t _base;
+        internal IntPtr _get_identifier;
+        internal IntPtr _get_path;
+        internal IntPtr _get_manifest;
+        internal IntPtr _is_same;
+        internal IntPtr _get_handler;
+        internal IntPtr _get_loader_context;
+        internal IntPtr _is_loaded;
+        internal IntPtr _unload;
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate void add_ref_delegate(cef_domevent_t* self);
+        private delegate void add_ref_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int release_delegate(cef_domevent_t* self);
+        private delegate int release_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_one_ref_delegate(cef_domevent_t* self);
+        private delegate int has_one_ref_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_type_delegate(cef_domevent_t* self);
+        private delegate cef_string_userfree* get_identifier_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate CefDomEventCategory get_category_delegate(cef_domevent_t* self);
+        private delegate cef_string_userfree* get_path_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate CefDomEventPhase get_phase_delegate(cef_domevent_t* self);
+        private delegate cef_dictionary_value_t* get_manifest_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int can_bubble_delegate(cef_domevent_t* self);
+        private delegate int is_same_delegate(cef_extension_t* self, cef_extension_t* that);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int can_cancel_delegate(cef_domevent_t* self);
+        private delegate cef_extension_handler_t* get_handler_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_domdocument_t* get_document_delegate(cef_domevent_t* self);
+        private delegate cef_request_context_t* get_loader_context_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_domnode_t* get_target_delegate(cef_domevent_t* self);
+        private delegate int is_loaded_delegate(cef_extension_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_domnode_t* get_current_target_delegate(cef_domevent_t* self);
+        private delegate void unload_delegate(cef_extension_t* self);
         
         // AddRef
         private static IntPtr _p0;
         private static add_ref_delegate _d0;
         
-        public static void add_ref(cef_domevent_t* self)
+        public static void add_ref(cef_extension_t* self)
         {
             add_ref_delegate d;
             var p = self->_base._add_ref;
@@ -109,7 +109,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p1;
         private static release_delegate _d1;
         
-        public static int release(cef_domevent_t* self)
+        public static int release(cef_extension_t* self)
         {
             release_delegate d;
             var p = self->_base._release;
@@ -126,7 +126,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p2;
         private static has_one_ref_delegate _d2;
         
-        public static int has_one_ref(cef_domevent_t* self)
+        public static int has_one_ref(cef_extension_t* self)
         {
             has_one_ref_delegate d;
             var p = self->_base._has_one_ref;
@@ -139,140 +139,140 @@ namespace Xilium.CefGlue.Interop
             return d(self);
         }
         
-        // GetType
+        // GetIdentifier
         private static IntPtr _p3;
-        private static get_type_delegate _d3;
+        private static get_identifier_delegate _d3;
         
-        public static cef_string_userfree* get_type(cef_domevent_t* self)
+        public static cef_string_userfree* get_identifier(cef_extension_t* self)
         {
-            get_type_delegate d;
-            var p = self->_get_type;
+            get_identifier_delegate d;
+            var p = self->_get_identifier;
             if (p == _p3) { d = _d3; }
             else
             {
-                d = (get_type_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_type_delegate));
+                d = (get_identifier_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_identifier_delegate));
                 if (_p3 == IntPtr.Zero) { _d3 = d; _p3 = p; }
             }
             return d(self);
         }
         
-        // GetCategory
+        // GetPath
         private static IntPtr _p4;
-        private static get_category_delegate _d4;
+        private static get_path_delegate _d4;
         
-        public static CefDomEventCategory get_category(cef_domevent_t* self)
+        public static cef_string_userfree* get_path(cef_extension_t* self)
         {
-            get_category_delegate d;
-            var p = self->_get_category;
+            get_path_delegate d;
+            var p = self->_get_path;
             if (p == _p4) { d = _d4; }
             else
             {
-                d = (get_category_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_category_delegate));
+                d = (get_path_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_path_delegate));
                 if (_p4 == IntPtr.Zero) { _d4 = d; _p4 = p; }
             }
             return d(self);
         }
         
-        // GetPhase
+        // GetManifest
         private static IntPtr _p5;
-        private static get_phase_delegate _d5;
+        private static get_manifest_delegate _d5;
         
-        public static CefDomEventPhase get_phase(cef_domevent_t* self)
+        public static cef_dictionary_value_t* get_manifest(cef_extension_t* self)
         {
-            get_phase_delegate d;
-            var p = self->_get_phase;
+            get_manifest_delegate d;
+            var p = self->_get_manifest;
             if (p == _p5) { d = _d5; }
             else
             {
-                d = (get_phase_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_phase_delegate));
+                d = (get_manifest_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_manifest_delegate));
                 if (_p5 == IntPtr.Zero) { _d5 = d; _p5 = p; }
             }
             return d(self);
         }
         
-        // CanBubble
+        // IsSame
         private static IntPtr _p6;
-        private static can_bubble_delegate _d6;
+        private static is_same_delegate _d6;
         
-        public static int can_bubble(cef_domevent_t* self)
+        public static int is_same(cef_extension_t* self, cef_extension_t* that)
         {
-            can_bubble_delegate d;
-            var p = self->_can_bubble;
+            is_same_delegate d;
+            var p = self->_is_same;
             if (p == _p6) { d = _d6; }
             else
             {
-                d = (can_bubble_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(can_bubble_delegate));
+                d = (is_same_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(is_same_delegate));
                 if (_p6 == IntPtr.Zero) { _d6 = d; _p6 = p; }
             }
-            return d(self);
+            return d(self, that);
         }
         
-        // CanCancel
+        // GetHandler
         private static IntPtr _p7;
-        private static can_cancel_delegate _d7;
+        private static get_handler_delegate _d7;
         
-        public static int can_cancel(cef_domevent_t* self)
+        public static cef_extension_handler_t* get_handler(cef_extension_t* self)
         {
-            can_cancel_delegate d;
-            var p = self->_can_cancel;
+            get_handler_delegate d;
+            var p = self->_get_handler;
             if (p == _p7) { d = _d7; }
             else
             {
-                d = (can_cancel_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(can_cancel_delegate));
+                d = (get_handler_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_handler_delegate));
                 if (_p7 == IntPtr.Zero) { _d7 = d; _p7 = p; }
             }
             return d(self);
         }
         
-        // GetDocument
+        // GetLoaderContext
         private static IntPtr _p8;
-        private static get_document_delegate _d8;
+        private static get_loader_context_delegate _d8;
         
-        public static cef_domdocument_t* get_document(cef_domevent_t* self)
+        public static cef_request_context_t* get_loader_context(cef_extension_t* self)
         {
-            get_document_delegate d;
-            var p = self->_get_document;
+            get_loader_context_delegate d;
+            var p = self->_get_loader_context;
             if (p == _p8) { d = _d8; }
             else
             {
-                d = (get_document_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_document_delegate));
+                d = (get_loader_context_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_loader_context_delegate));
                 if (_p8 == IntPtr.Zero) { _d8 = d; _p8 = p; }
             }
             return d(self);
         }
         
-        // GetTarget
+        // IsLoaded
         private static IntPtr _p9;
-        private static get_target_delegate _d9;
+        private static is_loaded_delegate _d9;
         
-        public static cef_domnode_t* get_target(cef_domevent_t* self)
+        public static int is_loaded(cef_extension_t* self)
         {
-            get_target_delegate d;
-            var p = self->_get_target;
+            is_loaded_delegate d;
+            var p = self->_is_loaded;
             if (p == _p9) { d = _d9; }
             else
             {
-                d = (get_target_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_target_delegate));
+                d = (is_loaded_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(is_loaded_delegate));
                 if (_p9 == IntPtr.Zero) { _d9 = d; _p9 = p; }
             }
             return d(self);
         }
         
-        // GetCurrentTarget
+        // Unload
         private static IntPtr _pa;
-        private static get_current_target_delegate _da;
+        private static unload_delegate _da;
         
-        public static cef_domnode_t* get_current_target(cef_domevent_t* self)
+        public static void unload(cef_extension_t* self)
         {
-            get_current_target_delegate d;
-            var p = self->_get_current_target;
+            unload_delegate d;
+            var p = self->_unload;
             if (p == _pa) { d = _da; }
             else
             {
-                d = (get_current_target_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_current_target_delegate));
+                d = (unload_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(unload_delegate));
                 if (_pa == IntPtr.Zero) { _da = d; _pa = p; }
             }
-            return d(self);
+            d(self);
         }
         
     }
