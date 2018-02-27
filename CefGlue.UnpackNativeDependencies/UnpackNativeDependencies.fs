@@ -174,12 +174,11 @@ module ChromiumUtilities =
         with _ ->
             ()
 
-
-    let unpackDependencies (id,version) (deps : seq<KeyValuePair<string*int,string>>) =
-        let name = sprintf "%s_%s" id version
-        let workingDir = Path.Combine(Path.GetTempPath(), name)
-
-        CefRuntime.LoadPath <- workingDir
+    let unpackDependenciesTo (fixupLoadPath : bool) (name : string) (workingDir : string) (id,version) (deps : seq<KeyValuePair<string*int,string>>) =
+        
+        if fixupLoadPath then
+            CefRuntime.LoadPath <- workingDir
+        
         // need more version cache files for 
         let id =
             match System.Environment.OSVersion.Platform with
@@ -211,7 +210,15 @@ module ChromiumUtilities =
 
         Console.ForegroundColor <- c
 
+    let unpackDependencies (id,version) (deps : seq<KeyValuePair<string*int,string>>) =
+        let name = sprintf "%s_%s" id version
+        let workingDir = Path.Combine(Path.GetTempPath(), name)
+        unpackDependenciesTo true name workingDir (id,version) deps
+
+    let id = "cef"
+    let version = "3.3282.1741"
+
     [<CompiledName("UnpackCef")>]
     let unpackCef () =
-        unpackDependencies ("cef", "3.3282.1741") Xilium.CefGlue.NativeDependencies.NativeDependencyPaths
+        unpackDependencies (id,version) Xilium.CefGlue.NativeDependencies.NativeDependencyPaths
 
