@@ -189,12 +189,13 @@ module ChromiumUtilities =
 
         let c = Console.ForegroundColor
 
-        if Directory.Exists workingDir then
-            printfn " 0: skipping CEF installation of version %s (found in $TEMP\\%s)" version name
+        // todo more sophisticated check.... (on linux this is not clear yet)
+        if Directory.Exists workingDir && Directory.GetFiles(workingDir).Length > 0 then
+            printfn " 0: skipping CEF installation of version %s (found in %%AppData%%\\%s)" version name
         else
             //Directory.CreateDirectory workingDir |> ignore
             Console.ForegroundColor <- ConsoleColor.Green
-            printfn " 0: installing CEF version %s in $TEMP\\%s" version name
+            printfn " 0: installing CEF version %s in %%AppData%%\\%s" version name
 
             let currentArch = getCurrentArch ()
             match deps |> Seq.tryFind (fun (KeyValue(arch, url)) -> arch = currentArch) with
@@ -212,7 +213,8 @@ module ChromiumUtilities =
 
     let unpackDependencies (id,version) (deps : seq<KeyValuePair<string*int,string>>) =
         let name = sprintf "%s_%s" id version
-        let workingDir = Path.Combine(Path.GetTempPath(), name)
+        let appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+        let workingDir = Path.Combine(appDataPath, name)
         unpackDependenciesTo true name workingDir (id,version) deps
 
     let id = "cef"
