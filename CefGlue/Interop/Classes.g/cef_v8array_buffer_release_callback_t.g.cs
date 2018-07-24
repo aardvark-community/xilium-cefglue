@@ -10,51 +10,51 @@ namespace Xilium.CefGlue.Interop
     
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_get_geolocation_callback_t
+    internal unsafe struct cef_v8array_buffer_release_callback_t
     {
         internal cef_base_ref_counted_t _base;
-        internal IntPtr _on_location_update;
+        internal IntPtr _release_buffer;
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate void add_ref_delegate(cef_get_geolocation_callback_t* self);
+        internal delegate void add_ref_delegate(cef_v8array_buffer_release_callback_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate int release_delegate(cef_get_geolocation_callback_t* self);
+        internal delegate int release_delegate(cef_v8array_buffer_release_callback_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate int has_one_ref_delegate(cef_get_geolocation_callback_t* self);
+        internal delegate int has_one_ref_delegate(cef_v8array_buffer_release_callback_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate void on_location_update_delegate(cef_get_geolocation_callback_t* self, cef_geoposition_t* position);
+        internal delegate void release_buffer_delegate(cef_v8array_buffer_release_callback_t* self, void* buffer);
         
         private static int _sizeof;
         
-        static cef_get_geolocation_callback_t()
+        static cef_v8array_buffer_release_callback_t()
         {
-            _sizeof = Marshal.SizeOf(typeof(cef_get_geolocation_callback_t));
+            _sizeof = Marshal.SizeOf(typeof(cef_v8array_buffer_release_callback_t));
         }
         
-        internal static cef_get_geolocation_callback_t* Alloc()
+        internal static cef_v8array_buffer_release_callback_t* Alloc()
         {
-            var ptr = (cef_get_geolocation_callback_t*)Marshal.AllocHGlobal(_sizeof);
-            *ptr = new cef_get_geolocation_callback_t();
+            var ptr = (cef_v8array_buffer_release_callback_t*)Marshal.AllocHGlobal(_sizeof);
+            *ptr = new cef_v8array_buffer_release_callback_t();
             ptr->_base._size = (UIntPtr)_sizeof;
             return ptr;
         }
         
-        internal static void Free(cef_get_geolocation_callback_t* ptr)
+        internal static void Free(cef_v8array_buffer_release_callback_t* ptr)
         {
             Marshal.FreeHGlobal((IntPtr)ptr);
         }
