@@ -24,3 +24,7 @@ paket-files
 /CefGlue.Demo.GtkSharp/bin/x86/Debug
 /.vs/Xilium.CefGlue.WithoutGtk/v15/*.suo
 /.vs/Xilium.CefGlue/v15/*.suo
+/.vs/Xilium.CefGlue.WithoutGtk/v15/Server/sqlite3/db.lock
+/.vs/Xilium.CefGlue.WithoutGtk/v15/Server/sqlite3/storage.ide
+/.vs/Xilium.CefGlue.WithoutGtk/v15/Server/sqlite3/storage.ide-shm
+/.vs/Xilium.CefGlue.WithoutGtk/v15/Server/sqlite3/storage.ide-wal
