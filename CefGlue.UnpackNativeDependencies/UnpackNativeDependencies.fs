@@ -218,7 +218,7 @@ module ChromiumUtilities =
         unpackDependenciesTo true name workingDir (id,version) deps
 
     let id = "cef"
-    let version = "3.3282.1741"
+    let version = "3.3359.1772"
 
     [<CompiledName("UnpackCef")>]
     let unpackCef () =
