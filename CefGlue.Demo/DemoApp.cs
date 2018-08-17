@@ -66,7 +66,6 @@
 
             var settings = new CefSettings();
             settings.MultiThreadedMessageLoop = MultiThreadedMessageLoop = CefRuntime.Platform == CefRuntimePlatform.Windows;
-            settings.SingleProcess = false;
             settings.LogSeverity = CefLogSeverity.Verbose;
             settings.LogFile = "cef.log";
             settings.RemoteDebuggingPort = 20480;
