@@ -5,14 +5,7 @@ framework:>=net40
 nuget SharpZipLib ~> 0.86.0
 
 group Build
-content: none
-source https://vrvis.myget.org/F/aardvark_public/api/v3/index.json
-source https://api.nuget.org/v3/index.json
-
-
-group Build
 framework: net45
 content: none
 source https://api.nuget.org/v3/index.json
-source https://vrvis.myget.org/F/aardvark_public/api/v3/index.json
 github aardvark-platform/aardvark.fake:v4-temp

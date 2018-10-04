@@ -28,3 +28,5 @@ paket-files
 /.vs/Xilium.CefGlue.WithoutGtk/v15/Server/sqlite3/storage.ide
 /.vs/Xilium.CefGlue.WithoutGtk/v15/Server/sqlite3/storage.ide-shm
 /.vs/Xilium.CefGlue.WithoutGtk/v15/Server/sqlite3/storage.ide-wal
+/.paket/paket.exe
+/.paket/*.targets
