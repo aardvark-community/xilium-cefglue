@@ -2,7 +2,7 @@ source https://api.nuget.org/v3/index.json
 
 framework:>=net40
 
-nuget SharpZipLib ~> 0.86.0
+nuget SharpZipLib ~> 1.2.0
 
 group Build
 framework: net45

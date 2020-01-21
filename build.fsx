@@ -1,5 +1,5 @@
 #load @"paket-files/build/aardvark-platform/Aardvark.Fake/DefaultSetup.fsx"
-#r "packages/SharpZipLib/lib/20/ICSharpCode.SharpZipLib.dll"
+#r "packages/SharpZipLib/lib/net45/ICSharpCode.SharpZipLib.dll"
 
 open Fake
 open System
