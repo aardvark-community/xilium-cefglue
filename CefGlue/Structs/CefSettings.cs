@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Text;
     using Xilium.CefGlue.Interop;
 
@@ -16,10 +15,6 @@
         public CefSettings()
         {
             BackgroundColor = new CefColor(255, 255, 255, 255);
-            if (!String.IsNullOrEmpty(CefRuntime.LoadPath)) {
-                ResourcesDirPath = CefRuntime.LoadPath;
-                LocalesDirPath = Path.Combine(CefRuntime.LoadPath, "locales");
-            }
         }
 
         /// <summary>
