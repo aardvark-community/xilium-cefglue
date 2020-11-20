@@ -6,7 +6,6 @@ open System.Diagnostics
 open System.Net
 open System.Collections.Generic
 
-open Xilium.CefGlue.Wrapper
 open Xilium.CefGlue
 
 
@@ -84,7 +83,8 @@ module ChromiumUtilities =
 
 
     let downloadCefTo (url : string) (unpackDir : string) = 
-        let tarbz = Path.GetFileName(url)
+        let urlString = System.Web.HttpUtility.UrlDecode(url)
+        let tarbz = Path.GetFileName(urlString)
         let tar = Path.GetFileNameWithoutExtension tarbz
         let plainDirName = Path.GetFileNameWithoutExtension tar
         let tempDir = Path.GetTempPath()
@@ -218,7 +218,7 @@ module ChromiumUtilities =
         unpackDependenciesTo true name workingDir (id,version) deps
 
     let id = "cef"
-    let version = "3.3359.1772"
+    let version = "87.1.1+g9a70877+chromium-87.0.4280.27"
 
     [<CompiledName("UnpackCef")>]
     let unpackCef () =
