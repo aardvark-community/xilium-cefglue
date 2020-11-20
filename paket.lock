@@ -1,19 +1,20 @@
-RESTRICTION: >= net40
+RESTRICTION: == netstandard2.0
 NUGET
   remote: https://api.nuget.org/v3/index.json
+    FSharp.Core (4.6.2)
     SharpZipLib (1.2)
 
 GROUP Build
 CONTENT: NONE
-RESTRICTION: == net45
+RESTRICTION: == net48
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    FAKE (4.63.2)
+    FAKE (4.64.18)
     Mono.Cecil (0.10.4)
     SourceLink.Fake (1.1)
 GITHUB
   remote: aardvark-platform/aardvark.fake
-    FULLPROJECT (96926239f65c3d28860054c76882b637163f2841)
-      FAKE (>= 4.63 < 4.64)
+    FULLPROJECT (cb65d88da922ed4d3500a4c0d419ee5512dca674)
+      FAKE (>= 4.64 < 4.65)
       Mono.Cecil (>= 0.10.0-beta6 < 0.11)
       SourceLink.Fake (>= 1.1 < 1.2)

@@ -1,11 +1,16 @@
 source https://api.nuget.org/v3/index.json
 
-framework:>=net40
+framework: netstandard2.0
 
 nuget SharpZipLib ~> 1.2.0
+nuget FSharp.Core >= 4.6.2 lowest_matching: true
 
 group Build
-framework: net45
+framework: net48
 content: none
+source https://vrvis.myget.org/F/aardvark_public/api/v3/index.json
 source https://api.nuget.org/v3/index.json
-github aardvark-platform/aardvark.fake:v4-temp
+
+nuget FAKE             ~> 4.64.0
+
+github aardvark-platform/aardvark.fake:v4
