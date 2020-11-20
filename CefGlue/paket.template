@@ -1,8 +1,6 @@
-type file
+type project
 id Another.Unofficial.Xilium.CefGlue
 authors Xilium CefGlue Team, Paket packaging Harald Steinlechner
 description 
     Am unofficial fork of official http://xilium.bitbucket.org/cefglue/ extended with
     easy nuget package creation and native dependencies injection.
-files
-    Release\netstandard2.0\Xilium.CefGlue.dll ==> lib\netstandard2.0

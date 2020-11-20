@@ -34,6 +34,9 @@ let cefBuild =
 
 do Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 
+let vsVersion = MSBuildHelper.MSBuildDefaults.Properties |> List.append [("VisualStudioVersion", "16.0")]
+MSBuildHelper.MSBuildDefaults <- { MSBuildHelper.MSBuildDefaults with Properties = vsVersion }
+
 DefaultSetup.install ["Xilium.CefGlue.WithoutGtk.sln"]
 
 let unbz2 (sourceFile : string)  = 

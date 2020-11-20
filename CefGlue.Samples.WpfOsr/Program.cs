@@ -11,6 +11,7 @@
         [STAThread]
         private static int Main(string[] args)
         {
+            Xilium.CefGlue.ChromiumUtilities.UnpackCef();
             try
             {
                 CefRuntime.Load();
@@ -58,8 +59,9 @@
             }
 
 
-            var app = new Xilium.CefGlue.Samples.WpfOsr.App();
-            app.InitializeComponent();
+            var app = new Application();
+            var win = new MainWindow();
+            win.Show();
             app.Run();
 
             // shutdown CEF
