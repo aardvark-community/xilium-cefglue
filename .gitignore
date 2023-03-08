@@ -32,3 +32,5 @@ paket-files
 /.paket/*.targets
 *.user
 *.suo
+.vs/**
+.paket/**

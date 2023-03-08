@@ -1,3 +1,5 @@
 #!/bin/sh
 
-xbuild "$@" build.proj
+dotnet tool restore
+dotnet paket restore
+dotnet build Xilium.CefGlue.slnf

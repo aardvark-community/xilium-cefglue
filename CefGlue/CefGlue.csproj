@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <ProjectGuid>{703FF300-34B9-48D4-A5D6-E741F48D5F95}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Xilium.CefGlue</RootNamespace>
     <AssemblyName>Xilium.CefGlue</AssemblyName>
@@ -12,7 +10,6 @@
     <LangVersion>8.0</LangVersion>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NoWarn>1591</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -44,4 +41,5 @@
     <None Include="Wrapper\MessageRouter\CefMessageRouterRendererSide.cs" />
     <None Include="Wrapper\MessageRouter\Helpers.cs" />
   </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

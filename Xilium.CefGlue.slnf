@@ -1,0 +1,16 @@
+{
+  "solution": {
+    "path": "Xilium.CefGlue.sln",
+    "projects": [
+      "CefGlue.Demo.WinForms\\CefGlue.Demo.WinForms.csproj",
+      "CefGlue.Demo\\CefGlue.Demo.csproj",
+      "CefGlue.Samples.WpfOsr\\CefGlue.Samples.WpfOsr.csproj",
+      "CefGlue.Tests\\CefGlue.Tests.csproj",
+      "CefGlue.UnpackNativeDependencies\\CefGlue.UnpackNativeDependencies.fsproj",
+      "CefGlue.WPF.Tests\\CefGlue.WPF.Tests.csproj",
+      "CefGlue.WPF\\CefGlue.WPF.csproj",
+      "CefGlue.WindowsForms\\CefGlue.WindowsForms.csproj",
+      "CefGlue\\CefGlue.csproj"
+    ]
+  }
+}

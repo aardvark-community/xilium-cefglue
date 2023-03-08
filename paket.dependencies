@@ -1,17 +1,10 @@
 source https://api.nuget.org/v3/index.json
 
-framework: netstandard2.0, net471, netcoreapp3.1
+framework: auto-detect
+storage: none
 
-nuget SharpZipLib ~> 1.2.0
-nuget FSharp.Core >= 4.6.2 lowest_matching: true
-nuget NLog = 2.0.1.2
+nuget FSharp.Core       >= 4.6.2 lowest_matching: true
+nuget Aardvark.Build    ~> 1.0.19
 
-group Build
-framework: net48
-content: none
-source https://vrvis.myget.org/F/aardvark_public/api/v3/index.json
-source https://api.nuget.org/v3/index.json
-
-nuget FAKE             ~> 4.64.0
-
-github aardvark-platform/aardvark.fake:v4
+nuget SharpZipLib       ~> 1.4.2
+nuget NLog              ~> 5.1.2
